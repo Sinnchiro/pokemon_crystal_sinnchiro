@@ -126,7 +126,6 @@ GetMonSubmenuItems:
 	call CanUseFlash
 	call CanUseFly
 	call CanUseDig
-	call Can_Use_Sweet_Scent
 	call CanUseTeleport
 	call CanUseSoftboiled
 	call CanUseMilkdrink
@@ -416,7 +415,7 @@ CanUseFly:
 ; Step 1: Badge Check
 	ld de, ENGINE_STORMBADGE
 	ld b, CHECK_FLAG
-farcall EngineFlagAction
+	farcall EngineFlagAction
 	ld a, c
 	and a
 	ret z ; .fail, dont have needed badge
@@ -450,43 +449,6 @@ farcall EngineFlagAction
 	ret c ; fail
 .yes
 	ld a, MONMENUITEM_FLY
-	call AddMonMenuItem
-	ret
-
-Can_Use_Sweet_Scent:
-; Step 1: Location check
-	farcall CanEncounterWildMon ; CanUseSweetScent instead for older versions of pokecrystal
-	ret nc
-	farcall GetMapEncounterRate
-	ld a, b
-	and a
-	ret z
-
-.valid_location
-; Step 2: Check if mon knows Move 
-	ld a, SWEET_SCENT
-	call CheckMonKnowsMove
-	and a
-	jr z, .yes
-
-; Step 3: Check if TM is in bag
-	ld a, TM_SWEET_SCENT
-	ld [wCurItem], a
-	ld hl, wNumItems
-	call CheckItem
-	ret nc ; .fail, tm not in bag
-
-; Step 4: Check if mon can learn Move via TM/HM/Move tutor
-	ld a, SWEET_SCENT
-	call CheckMonCanLearn_TM_HM
-	jr c, .yes
-
-; Step 5: Check if mon can learn move via LVL-UP
-	ld a, SWEET_SCENT
-	call CheckLvlUpMoves
-	ret c ; fail
-.yes
-	ld a, MONMENUITEM_SWEETSCENT
 	call AddMonMenuItem
 	ret
 
