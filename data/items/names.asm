@@ -1,9 +1,9 @@
 ItemNames::
 	list_start ItemNames
 	li "MASTER BALL"
-	li "ULTRA BALL"
-	li "BRIGHTPOWDER"
-	li "GREAT BALL"
+	li "HYPER BALL"
+	li "POUDRECLAIRE"
+	li "SUPER BALL"
 	li "# BALL"
 	li "TERU-SAMA"
 	li "BICYCLE"
